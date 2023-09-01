@@ -20,9 +20,9 @@ class FormStudent extends Component {
     errorType = createRef()
 
     static getDerivedStateFromProps(nextProps, currentState) {
-        console.log("123")
+        console.log("getDerivedStateFromProps")
 
-        if (nextProps.slectedStudent && nextProps.slectedStudent.id !== currentState.id && nextProps.slectedStudent.id !== "" ) {
+        if (nextProps.slectedStudent && nextProps.slectedStudent.id !== currentState.id ) {
             currentState = nextProps.slectedStudent;
         }
 
@@ -66,19 +66,19 @@ class FormStudent extends Component {
         curent.innerHTML = mess;
         return false;
     }
-    validationID = (value, curent, mess) => {
-        const indx = this.props.listUser.findIndex((element) => {
-            return element.id === value;
-        })
-        // console.log(indx)
+    // validationID = (value, curent, mess) => {
+    //     const indx = this.props.listUser.findIndex((element) => {
+    //         return element.id === value;
+    //     })
+    //     // console.log(indx)
 
-        if (indx !== -1) {
-            curent.innerHTML = mess;
-            return false;
-        };
-        curent.innerHTML = "";
-        return true
-    }
+    //     if (indx !== -1) {
+    //         curent.innerHTML = mess;
+    //         return false;
+    //     };
+    //     curent.innerHTML = "";
+    //     return true
+    // }
 
     resetValue = () => {
         this.setState({
@@ -102,6 +102,7 @@ class FormStudent extends Component {
         let isValid = true;
 
 
+        isValid &= this.validationEmpty(this.state.id, this.errorID.current, "(*) ID can't empty") // && this.validationID(this.state.id, this.errorID.current, "(*) ID is avalible");
         isValid &= this.validationEmpty(this.state.fullName, this.errorfullName.current, "(*) Full Name can't empty");
         isValid &= this.validationEmpty(this.state.class, this.errorClass.current, "(*) Class can't empty");
         isValid &= this.validationEmpty(this.state.phone, this.errorPhone.current, "(*) Phone Number can't empty");
@@ -112,9 +113,8 @@ class FormStudent extends Component {
         const indx = this.props.listUser.findIndex((element) => {
             return element.id === this.state.id;
         })
-        if (indx === -1) {
-            isValid &= this.validationEmpty(this.state.id, this.errorID.current, "(*) ID can't empty") && this.validationID(this.state.id, this.errorID.current, "(*) ID is avalible");
-        }
+        // if (indx === -1) {
+        // }
 
         if (isValid && indx === -1) {
             this.props.dispatch(addStudent(this.state))

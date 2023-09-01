@@ -12,13 +12,13 @@ if (stringify) {
 }
 
 export const studentReducer = (state = DEAFAULT_STATE, action) => {
-    console.log(action)
+    // console.log(action)
 
 
     switch (action.type) {
 
         case ADD_STUDENT: {
-            state.listUser = [...state.listUser, action.payload];
+            state.listUser = [action.payload,...state.listUser];
             // console.log(state.listUser)
             localStorage.setItem("STUDENT_LIST", JSON.stringify(state.listUser))
             break
@@ -26,12 +26,12 @@ export const studentReducer = (state = DEAFAULT_STATE, action) => {
 
         case SELECTED_STUDENT: {
             state.slectedStudent = action.payload;
-            // console.log(state.slectedStudent)
+            console.log(state.slectedStudent)
             break
         }
 
         case UPDATE_STUDENT: {
-            console.log("123")
+            // console.log("update")
             const data = [...state.listUser];
 
             const index = data.findIndex((element) => {
@@ -60,7 +60,7 @@ export const studentReducer = (state = DEAFAULT_STATE, action) => {
             });
 
             if (index !== -1) {
-                const isAnwser = window.confirm("Are You Want Delete This Student");
+                const isAnwser = window.confirm(`Are You Want Delete Student ${action.payload.fullName}`);
                 if (isAnwser) {
                     data.splice(index, 1)
                 }
