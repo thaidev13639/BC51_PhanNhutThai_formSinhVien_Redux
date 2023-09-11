@@ -20,27 +20,30 @@ class InfornationBoard extends Component {
     renderStudent = () => {
         const filterName = this.props.listUser.filter((element) => {
             // return element.fullName.trim().toLowerCase().indexOf(this.state.keyWord.trim().toLocaleLowerCase()) !== -1
-            const nameEle = element.fullName.trim().toLowerCase()
-            const nameEleRMVN = removeVietnameseTones(nameEle)
+            if (element.fullName) {
+                const nameEle = element.fullName.trim().toLowerCase()
+                const nameEleRMVN = removeVietnameseTones(nameEle)
 
-            const nameState = this.state.keyWord.trim().toLowerCase()
-            const nameKeyWord = removeVietnameseTones(nameState)
-            
-            const valible = nameEleRMVN.indexOf(nameKeyWord) 
-            // console.log(valible)
-            
-            if (valible) {
-                return nameEleRMVN.indexOf(nameKeyWord) !== -1
-            } else {
-                return true;
+                const nameState = this.state.keyWord.trim().toLowerCase()
+                const nameKeyWord = removeVietnameseTones(nameState)
+
+                const valible = nameEleRMVN.indexOf(nameKeyWord)
+
+                if (valible) {
+                    return nameEleRMVN.indexOf(nameKeyWord) !== -1
+                } else {
+                    return true;
+                }
             }
+            // console.log(valible)
+            return true
         })
 
-        const filterType = filterName.filter((element)=>{
+        const filterType = filterName.filter((element) => {
             const valible = element.type.trim().toLowerCase().indexOf(this.state.type.trim().toLowerCase())
 
             if (valible && this.state.type !== "All") {
-                return element.type.trim().toLowerCase().indexOf(this.state.type.trim().toLowerCase()) !== -1 ;
+                return element.type.trim().toLowerCase().indexOf(this.state.type.trim().toLowerCase()) !== -1;
             } else {
                 return true
             }
